@@ -1,4 +1,6 @@
-using Microsoft.AspNetCore.Builder;
+using MySqlConnector;
+using System.Data;
+using XPEdu.Client.Api.Infra.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,10 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IDbConnection>(sp => new MySqlConnection("Server=localhost;Database=xpedu;User=root;Password=admin123;"));
+
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
 
 var app = builder.Build();
 
